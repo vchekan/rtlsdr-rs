@@ -410,4 +410,18 @@ impl RTLSDRDevice {
             err => Err(rtlsdr_error(err, "Unknown"))
         }
     }
+
+    /// Read synchronously into provided buffer
+    pub fn read_sync_buff(&self, buffer: &mut Vec<u8>) -> Result<i32, RTLSDRError> {
+        let mut n: libc::c_int = 0;
+        let len = buffer.capacity();
+        let ptr: *mut libc::c_void = buffer.as_mut_ptr() as (*mut libc::c_void);
+        match unsafe { ffi::rtlsdr_read_sync(self.ptr, ptr, len as libc::c_int, &mut n) } {
+            0 => {
+                unsafe { buffer.set_len(n as usize) };
+                Ok(n)
+            },
+            err => Err(rtlsdr_error(err, "Unknown"))
+        }
+    }
 }
