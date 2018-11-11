@@ -53,6 +53,7 @@ pub fn get_device_name(index: i32) -> String {
 }
 
 /// A set of USB strings for an RTL-SDR device.
+#[derive(Debug)]
 pub struct USBStrings {
     pub manufacturer: String, pub product: String, pub serial: String
 }
