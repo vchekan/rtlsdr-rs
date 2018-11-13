@@ -28,6 +28,7 @@ pub enum DirectSampling {
     Disabled, I, Q
 }
 
+#[derive(Debug)]
 pub struct RTLSDRDevice {
     ptr: *mut ffi::rtlsdr_dev
 }
